@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+    db:
+        build: ./db
+        ports:
+            - "3306:3306"
+        container_name: db
+        restart: unless-stopped
+        platform: linux/amd64
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: test
+        volumes:
+            - mysql:/var/lib/mysql
+            - mysql_config:/etc/mysql
+    server:
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./server:/app/server
+        container_name: server
+        environment:
+            MYSQL_DATABASE: test
+            MYSQL_USER: root
+            MYSQL_PASSWORD: password
+            MYSQL_HOST: db
+        ports:
+            - "8080:8080"
+        command: npm run dev
+        depends_on:
+            - db
+    client:
+        build: ./client
+        container_name: client
+        environment:
+            NODE_PATH: src
+        ports:
+            - 3000:3000
+        volumes:
+            - ./client/src:/app/src
+        links:
+            - server
+        command: npm start
+volumes:
+    mysql:
+    mysql_config:
