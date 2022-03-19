@@ -1,5 +1,5 @@
 {
-	"name": "jobs-view-be",
+	"name": "server",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
