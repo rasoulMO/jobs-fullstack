@@ -1,4 +1,4 @@
-# Jobs-view-FullStack
+# Jobs-FullStack
 
 ## For running locally
 
