@@ -1,0 +1,7 @@
+{
+	"verbos": true,
+	"watch": ["server/src/**/*.ts"],
+	"execMap": {
+		"ts": "node --nolazy -r ts-node/register"
+	}
+}
