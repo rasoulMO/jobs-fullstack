@@ -1,32 +1,77 @@
 const express = require('express');
-const mysql = require("mysql2");
+const connections = require('./configs/db');
+
 const app = express();
 const port = 8080;
 
-const connection = mysql.createPool({
-	connectionLimit: 10,
-	host: process.env.MYSQL_HOST || "localhost",
-	user: process.env.MYSQL_USER || "root",
-	password: process.env.MYSQL_PASSWORD || "password",
-	database: process.env.MYSQL_DATABASE || "test",
+
+// respond with "hello world" when a GET request is made to the homepage
+app.get("/", function (req: any, res: {send: (arg0: string) => void;}) {
+	res.send("hello world");
 });
 
-app.get("/", (req: any, res: {json: (arg0: {success: boolean; err?: any; data?: any;}) => void;}) => {
-	connection.query("SELECT * FROM Student", (err: any, data: any) => {
-		if (err) {
-			res.json({
-				success: false,
-				err,
-			});
-		} else {
-			res.json({
-				success: true,
-				data: data,
-			});
-		}
+app.get("/connect", function (req: any, res: {send: (arg0: string) => void;}) {
+	connections.connect(function (err: any) {
+		if (err) throw err;
+		res.send("connected");
 	});
 });
 
-app.listen(port, () => {
-	console.log(`server is running test on port ${port}`);
+app.get("/drop-project", function (req: any, res: {send: (arg0: string) => void;}) {
+	connections.connect(function (err: any) {
+		if (err) throw err;
+		const sql = `
+			DROP TABLE IF EXISTS project;
+  `;
+		connections.query(sql, function (err: any, result: any) {
+			if (err) throw err;
+			res.send("project table drobt");
+		});
+	});
 });
+
+
+app.get("/create-project", function (req: any, res: {send: (arg0: string) => void;}) {
+	connections.connect(function (err: any) {
+		if (err) throw err;
+		const sql = `
+    CREATE TABLE IF NOT EXISTS project (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      title VARCHAR(255) NOT NULL
+    )  ENGINE=INNODB;
+  `;
+		connections.query(sql, function (err: any, result: any) {
+			if (err) throw err;
+			res.send("project table created");
+		});
+	});
+});
+
+app.get("/insert-project", function (req: any, res: {send: (arg0: string) => void;}) {
+	connections.connect(function (err: any) {
+		if (err) throw err;
+		const sql = `INSERT INTO project (title) VALUES ('project 1')`;
+		connections.query(sql, function (err: any, result: any) {
+			if (err) throw err;
+			res.send(`project 1 inserted into table`);
+		});
+	});
+});
+
+
+app.get("/fetch-project", function (req: any, res: {send: (arg0: string) => void;}) {
+	connections.connect(function (err: any) {
+		if (err) throw err;
+		const sql = `SELECT * FROM project`;
+		connections.query(sql, function (err: any, result: any, fields: any) {
+			if (err) throw err;
+			res.send(JSON.stringify(result));
+		});
+	});
+});
+
+
+app.listen(3000);
+
+console.log("listening on port 3000");
+
