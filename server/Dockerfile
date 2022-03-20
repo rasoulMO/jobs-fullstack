@@ -8,6 +8,10 @@ RUN npm i
 
 COPY . .
 
+CMD /wait-for-it.sh mysql_server:3306 
+
+EXPOSE 3000
+
 # FROM base as production
 
 # ENV NODE_PATH=./server/build
