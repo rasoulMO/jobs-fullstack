@@ -1,21 +1,5 @@
 # Jobs-FullStack
 
-## For running locally
-
-`npm i`
-
-### Start the dev server
-
-`npm run dev`
-
-### Build the project
-
-`npm run build`
-
-### Start built project
-
-`npm start`
-
 ## For running Docker Containers
 
 _You'll need docker installed on your machine to run this in case you didn't know!_
@@ -35,3 +19,21 @@ _You'll need docker installed on your machine to run this in case you didn't kno
 ### Build and start production build
 
 `make up-prod`
+
+## For running the client
+
+### from the root type cd client and then
+
+`npm start`
+
+## Start the dev server cd server and then
+
+`npm run dev`
+
+### Build the project
+
+`npm run build`
+
+### Start built project
+
+`npm start`
