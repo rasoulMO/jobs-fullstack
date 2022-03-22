@@ -1,4 +1,7 @@
+import {Response} from "express";
+
 const express = require('express');
+
 const app = express();
 
 
@@ -9,16 +12,18 @@ app.use(express.json());
 /* Routes */
 const indexRouter = require('./routes/index');
 const projectRouter = require('./routes/project');
+const jobRouter = require('./routes/job');
 
 app.use('/', indexRouter);
 app.use('/projects', projectRouter);
+app.use('/jobs', jobRouter);
 
 
 // Global Error Handler. IMPORTANT function params MUST start with err
-app.use((err: {stack: any; name: any; code: any;}, req: any, res: {status: (arg0: number) => {(): any; new(): any; json: {(arg0: {message: string;}): void; new(): any;};};}, next: any) => {
+app.use((err: Error, res: Response) => {
 	console.log(err.stack);
 	console.log(err.name);
-	console.log(err.code);
+	console.log(err.message);
 
 	res.status(500).json({
 		message: "Something went rely wrong",
