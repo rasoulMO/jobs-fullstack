@@ -51,7 +51,7 @@ class Projects {
 
 
 	static findAll() {
-		let sql = `SELECT * FROM jobs project JOIN jobs ON project.id = jobs.project_id`;
+		let sql = `SELECT * FROM project JOIN jobs ON project.id = jobs.project_id`;
 
 		return db.execute(sql);
 	}

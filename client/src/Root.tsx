@@ -1,54 +1,43 @@
-import {useQuery} from "react-query";
-import {Routes, Route, Link} from "react-router-dom";
-import "./App.css";
+import React from "react";
+import {Routes, Route} from "react-router-dom";
+import "./Root.css";
 
-function Root(): React.ReactElement {
-	const {isLoading, error, data}: any = useQuery("repoData", () =>
-		fetch("http://localhost:3000/projects/").then((res) => res.json())
-	);
+// pages
+const Home = React.lazy(() => import("./pages/Home"));
 
-	// if (isLoading) return "Loading...";
+const Projects = React.lazy(() => import("./pages/Projects"));
+const Jobs = React.lazy(() => import("./pages/Jobs"));
 
-	// if (error) return "An error has occurred: " + error.message;
-
-	// console.log(data);
-
+function Root() {
 	return (
 		<div className='App'>
-			<h1>Hello there 👋</h1>
 			<Routes>
-				<Route path='/' element={<Home />} />
-				<Route path='about' element={<About />} />
+				<Route
+					index
+					element={
+						<React.Suspense fallback={<div>Loading...</div>}>
+							<Home />
+						</React.Suspense>
+					}
+				/>
+				<Route
+					path='/jobs'
+					element={
+						<React.Suspense fallback={<div>Loading...</div>}>
+							<Jobs />
+						</React.Suspense>
+					}
+				/>
+				<Route
+					path='/projects'
+					element={
+						<React.Suspense fallback={<div>Loading...</div>}>
+							<Projects />
+						</React.Suspense>
+					}
+				/>
 			</Routes>
 		</div>
-	);
-}
-
-function Home() {
-	return (
-		<>
-			<main>
-				<h2>Welcome to the homepage!</h2>
-				<p>You can do this, I believe in you.</p>
-			</main>
-			<nav>
-				<Link to='/about'>About</Link>
-			</nav>
-		</>
-	);
-}
-
-function About() {
-	return (
-		<>
-			<main>
-				<h2>Who are we?</h2>
-				<p>That feels like an existential question, don't you think?</p>
-			</main>
-			<nav>
-				<Link to='/'>Home</Link>
-			</nav>
-		</>
 	);
 }
 
