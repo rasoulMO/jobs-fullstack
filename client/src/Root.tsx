@@ -1,16 +1,22 @@
 import React from "react";
-import {Routes, Route} from "react-router-dom";
+import {Routes, Route, Link} from "react-router-dom";
 import "./Root.css";
 
 // pages
 const Home = React.lazy(() => import("./pages/Home"));
-
 const Projects = React.lazy(() => import("./pages/Projects"));
 const Jobs = React.lazy(() => import("./pages/Jobs"));
 
 function Root() {
 	return (
 		<div className='App'>
+			<nav>
+				<Link to='/'>Home</Link>
+				<br />
+				<Link to='/projects'>Projects</Link>
+				<br />
+				<Link to='/jobs'>Jobs</Link>
+			</nav>
 			<Routes>
 				<Route
 					index

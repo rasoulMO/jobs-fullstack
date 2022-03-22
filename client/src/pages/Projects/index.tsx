@@ -1,6 +1,6 @@
 import {useQuery} from "react-query";
 
-function Projects() {
+const Projects = () => {
 	const {data, isLoading, error} = useQuery("projects", () =>
 		fetch("http://localhost:3000/projects/").then((res) => res.json())
 	);
@@ -12,13 +12,14 @@ function Projects() {
 		return <div>Error!</div>;
 	}
 
-	console.log(data);
-
+	console.table(data.projects);
 	return (
 		<div>
 			<h1>Projects</h1>
+
+			<pre>{JSON.stringify(data.projects, null, 2)}</pre>
 		</div>
 	);
-}
+};
 
 export default Projects;
