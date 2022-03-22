@@ -1,5 +1,4 @@
 const mysql = require("mysql2");
-const env = process.env;
 
 const db_config = {
 	host: "mysql_server",
@@ -8,6 +7,14 @@ const db_config = {
 	database: "test_db",
 }
 
-const pool = mysql.createPool(db_config);
+const mysqlConnection = mysql.createConnection(db_config);
 
-module.exports = pool.promise();
+mysqlConnection.connect((err: any) => {
+	if (!err) {
+		console.log("Connected");
+	} else {
+		console.log("Connection Failed");
+	}
+});
+
+module.exports = mysqlConnection.promise();

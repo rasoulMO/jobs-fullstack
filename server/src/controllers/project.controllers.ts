@@ -10,15 +10,17 @@ exports.getAllProjects = async (req: any, res: any, next: any) => {
 	}
 };
 
+// create new project and add jobs to it
 exports.createNewProject = async (req: any, res: any, next: any) => {
 	try {
-		// let {title} = req.body;
-		let title: string = "project 1";
-		let project = new Project(title);
+		let {title, jobs} = req.body;
 
-		project = await project.save();
+		let project = new Project(title, jobs);
+
+		project = await project.createNewProjec();
 
 		res.status(201).json({message: "Project created"});
+
 	} catch (error) {
 		next(error);
 	}
