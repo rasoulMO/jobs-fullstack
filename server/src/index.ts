@@ -1,22 +1,24 @@
 import {Response} from "express";
-
 const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
 
 
 
 // Middleware
-app.use(express.json());
+app.use(cors());
+app.use(bodyParser.json());
 
 /* Routes */
 const indexRouter = require('./routes/index');
 const projectRouter = require('./routes/project');
 const jobRouter = require('./routes/job');
 
-app.use('/', indexRouter);
-app.use('/projects', projectRouter);
-app.use('/jobs', jobRouter);
+app.use('/', cors(), indexRouter);
+app.use('/projects', cors(), projectRouter);
+app.use('/jobs', cors(), jobRouter);
 
 
 // Global Error Handler. IMPORTANT function params MUST start with err
