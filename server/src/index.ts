@@ -33,5 +33,5 @@ app.use((err: Error, res: Response) => {
 });
 
 // Listen on pc port
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));

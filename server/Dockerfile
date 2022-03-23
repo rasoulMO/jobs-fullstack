@@ -10,7 +10,7 @@ COPY . .
 
 CMD /wait-for-it.sh mysql_server:3306 
 
-EXPOSE 3000
+EXPOSE 8080
 
 # FROM base as production
 
