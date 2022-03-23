@@ -7,7 +7,7 @@ class Jobs {
 	project_id: number;
 	status_id: number;
 	price: number;
-	created_at: string;
+	// created_at: string;
 
 	constructor(id: number, title: string, project_id: number, status_id: number, price: number, created_at: string) {
 		this.id = id
@@ -15,14 +15,14 @@ class Jobs {
 		this.project_id = project_id;
 		this.status_id = status_id;
 		this.price = price;
-		this.created_at = created_at;
+		// this.created_at = created_at;
 
 	}
 
 	save() {
-		let sql = `INSERT INTO jobs (project_id, status_id, price, created_at) VALUES ('${this.project_id}', '${this.status_id}', '${this.price}','${this.created_at}');`;
+		// let sql = `INSERT INTO jobs (project_id, status_id, price, created_at) VALUES ('${this.project_id}', '${this.status_id}', '${this.price}','${this.created_at}');`;
 
-		return dbb.promise().query(sql);
+		// return dbb.promise().query(sql);
 	}
 
 	updateStatus(id: number, status_id: number) {
@@ -51,7 +51,7 @@ class Jobs {
 	}
 
 	static findAllOrderedByCreatedAt() {
-		let sql = `SELECT DATE(created_at) as date FROM jobs ORDER BY jobs.created_at DESC`;
+		const sql = `SELECT * FROM jobs ORDER BY 'jobs.created_at' DESC`;
 
 		return dbb.promise().query(sql);
 	}

@@ -32,7 +32,8 @@ exports.getProjectById = async (req: any, res: any, next: any) => {
 
 		let [project, _] = await Project.findById(projectId);
 
-		res.status(200).json({project: project[0]});
+		// TODO: add check if project if correct with project[0]
+		res.status(200).json({project: project});
 	} catch (error) {
 		next(error);
 	}

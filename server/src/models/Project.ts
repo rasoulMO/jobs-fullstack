@@ -50,17 +50,58 @@ class Projects {
 	}
 
 
-	// JOIN jobs ON project.id = jobs.project_id
 	static findAll() {
-		let sql = `SELECT * FROM project`;
+		let sql_projects = `SELECT * FROM project`;
+		let sql_jobs = `SELECT * FROM jobs`;
 
-		return db.promise().query(sql);
+		return db.promise().query(sql_projects)
+			.then(([projects]: any) => {
+				let project_list = projects.map((project: any) => {
+					return {
+						id: project.id,
+						title: project.title,
+						jobs: []
+					};
+				});
+				return db.promise().query(sql_jobs)
+					.then(([jobs]: any) => {
+						project_list.forEach((project: any) => {
+							jobs.forEach((job: any) => {
+								if (project.id === job.project_id) {
+									project.jobs.push(job);
+								}
+							});
+						});
+						return project_list;
+					});
+			});
 	}
 
 	static findById(id: number) {
-		let sql = `SELECT * FROM project WHERE id = ${id};`;
+		let sql_project = `SELECT * FROM project WHERE id = ${id};`;
+		let sql_jobs = `SELECT * FROM jobs`;
 
-		return db.promise().query(sql);
+		return db.promise().query(sql_project)
+			.then(([projects]: any) => {
+				let project_list = projects.map((project: any) => {
+					return {
+						id: project.id,
+						title: project.title,
+						jobs: []
+					};
+				});
+				return db.promise().query(sql_jobs)
+					.then(([jobs]: any) => {
+						project_list.forEach((project: any) => {
+							jobs.forEach((job: any) => {
+								if (project.id === job.project_id) {
+									project.jobs.push(job);
+								}
+							});
+						});
+						return project_list;
+					});
+			});
 	}
 }
 

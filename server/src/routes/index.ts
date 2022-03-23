@@ -92,14 +92,6 @@ router.get("/insert-jobs", function (req: any, res: any) {
 	});
 });
 
-// get all projects with their jobs
-router.get("/fetch-join-project-jobs", function (req: any, res: any) {
-	const sql = `SELECT * FROM project JOIN jobs ON project.id = jobs.project_id`;
-	connection.query(sql, function (err: any, result: any, fields: any) {
-		if (err) throw err;
-		res.send(result);
-	});
-});
 
 // get all jobs ordered by created_at ASC 
 router.get("/fetch-jobs-ordered-by-created_at", function (req: any, res: any) {
