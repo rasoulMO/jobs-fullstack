@@ -21,12 +21,12 @@ CREATE TABLE IF NOT EXISTS jobs (
 
 
 -- insert data to tables project and status
-INSERT INTO project (title) VALUES ('project 1');
+INSERT INTO project (title) VALUES ('Project 1'), ('Project 2');
 
 
-INSERT INTO status (title) VALUES ('in preparation'), ('in progress'), ('delivered'), ('cancelled');
+INSERT INTO status (title) VALUES ('In preparation'), ('In progress'), ('Delivered'), ('Cancelled');
 
 
 
 -- insert data to table jobs
-INSERT INTO jobs (project_id, status_id, price, created_at ) VALUES (1, 1, 100, '2020-01-01 00:00:00'), (1, 2, 200, '2020-01-02 00:00:00'), (1, 3, 300, '2020-01-03 00:00:00');
+INSERT INTO jobs (project_id, status_id, price, created_at ) VALUES (1, 1, 100, '2020-01-01 00:00:00'), (1, 2, 200, '2020-01-02 00:00:00'), (2, 3, 300, '2020-01-03 00:00:00');
