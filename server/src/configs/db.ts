@@ -1,13 +1,13 @@
 import {MysqlError} from "mysql";
 import {Connection} from "mysql2";
-
+const env = process.env
 const mysql = require("mysql2");
 
 const db_config = {
-	host: "mysql_server",
-	user: "rasoul",
-	password: "secret",
-	database: "test_db",
+	host: env.MYSQL_HOST || "mysql_server",
+	user: env.MYSQL_USER || "rasoul",
+	password: env.MYSQL_PASSWORD || "secret",
+	database: env.MYSQL_DATABASE || "test_db",
 }
 
 const mysqlConnection = mysql.createPool(db_config);
