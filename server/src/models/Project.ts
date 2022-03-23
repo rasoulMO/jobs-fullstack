@@ -56,16 +56,16 @@ class Projects {
 
 		return db.promise().query(sql_projects)
 			.then(([projects]: any) => {
-				let project_list = projects.map((project: any) => {
-					return {
-						id: project.id,
-						title: project.title,
-						jobs: []
-					};
-				});
+				let project_list = projects.map((project: any) =>
+				([{
+					id: project.id,
+					title: project.title,
+					jobs: []
+				}]
+				));
 				return db.promise().query(sql_jobs)
 					.then(([jobs]: any) => {
-						project_list.forEach((project: any) => {
+						project_list.flat().forEach((project: any) => {
 							jobs.forEach((job: any) => {
 								if (project.id === job.project_id) {
 									project.jobs.push(job);
@@ -84,11 +84,11 @@ class Projects {
 		return db.promise().query(sql_project)
 			.then(([projects]: any) => {
 				let project_list = projects.map((project: any) => {
-					return {
+					return [{
 						id: project.id,
 						title: project.title,
 						jobs: []
-					};
+					}];
 				});
 				return db.promise().query(sql_jobs)
 					.then(([jobs]: any) => {
