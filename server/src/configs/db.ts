@@ -5,8 +5,8 @@ const mysql = require("mysql2");
 
 const db_config = {
 	host: env.MYSQL_HOST || "mysql_server",
-	user: env.MYSQL_USER || "rasoul",
-	password: env.MYSQL_PASSWORD || "secret",
+	user: env.MYSQL_USER || "user",
+	password: env.MYSQL_PASSWORD || "password",
 	database: env.MYSQL_DATABASE || "test_db",
 }
 

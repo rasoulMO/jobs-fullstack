@@ -23,15 +23,20 @@ app.use('/jobs', cors(), jobRouter);
 
 // Global Error Handler. IMPORTANT function params MUST start with err
 app.use((err: Error, res: Response) => {
-	console.log(err.stack);
-	console.log(err.name);
-	console.log(err.message);
 
+	// Log error
+	if (err) {
+		console.log("stack :", err.stack);
+		console.log("name :", err.name);
+		console.log("massage :", err.message);
+	}
+
+	// Send error message
 	res.status(500).json({
 		message: "Something went rely wrong",
 	});
 });
 
 // Listen on pc port
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));

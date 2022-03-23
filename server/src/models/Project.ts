@@ -2,19 +2,7 @@ const db = require("../configs/db");
 
 
 class Projects {
-	title: string;
-	jobs: any;
-	status_id: number;
-	price: number;
-	created_at: string;
-
-	constructor(title: string, jobs: any, status_id: number, price: number, created_at: string) {
-		this.title = title;
-		this.jobs = jobs;
-		this.status_id = status_id;
-		this.price = price;
-		this.created_at = created_at;
-	}
+	constructor() { }
 
 
 	// create new project and add jobs to it 
@@ -31,19 +19,6 @@ class Projects {
 		});
 	}
 
-	// createNewProject() {
-	// 	const sql = `INSERT INTO project (title) VALUES ('${this.title}')`;
-
-	// 	return db.promise().query(sql, (err: any, result: any) => {
-	// 		if (err) throw err;
-	// 		const project_id = result.insertId;
-	// 		this.jobs.forEach((job: any) => {
-	// 			const sql2 = `INSERT INTO jobs (project_id, status_id, price, created_at) VALUES (${project_id}, ${job.status_id}, ${job.price}, '${job.created_at}')`;
-	// 			db.promise().query(sql2);
-	// 		});
-	// 	});
-	// }
-
 	addJob(id: number, status_id: number, price: number, created_at: string) {
 		const sql = `INSERT INTO jobs (project_id, status_id, price, created_at) VALUES (${id}, ${status_id}, ${price}, '${created_at}')`;
 
@@ -56,23 +31,17 @@ class Projects {
 
 		return db.promise().query(sql_projects)
 			.then(([projects]: any) => {
-				let project_list = projects.map((project: any) =>
-				([{
-					id: project.id,
-					title: project.title,
-					jobs: []
-				}]
-				));
 				return db.promise().query(sql_jobs)
 					.then(([jobs]: any) => {
-						project_list.flat().forEach((project: any) => {
+						projects.forEach((project: any) => {
+							project.jobs = [];
 							jobs.forEach((job: any) => {
-								if (project.id === job.project_id) {
+								if (job.project_id === project.id) {
 									project.jobs.push(job);
 								}
 							});
 						});
-						return project_list;
+						return [projects, jobs];
 					});
 			});
 	}
@@ -92,7 +61,7 @@ class Projects {
 				});
 				return db.promise().query(sql_jobs)
 					.then(([jobs]: any) => {
-						project_list.forEach((project: any) => {
+						project_list.flat().forEach((project: any) => {
 							jobs.forEach((job: any) => {
 								if (project.id === job.project_id) {
 									project.jobs.push(job);
