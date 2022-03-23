@@ -1,6 +1,5 @@
 import React from "react";
 import {Routes, Route, Link} from "react-router-dom";
-import "./Root.css";
 
 // pages
 const Home = React.lazy(() => import("./pages/Home"));
