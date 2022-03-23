@@ -7,28 +7,13 @@ class Jobs {
 	project_id: number;
 	status_id: number;
 	price: number;
-	// created_at: string;
 
-	constructor(id: number, title: string, project_id: number, status_id: number, price: number, created_at: string) {
+	constructor(id: number, title: string, project_id: number, status_id: number, price: number) {
 		this.id = id
 		this.title = title;
 		this.project_id = project_id;
 		this.status_id = status_id;
 		this.price = price;
-		// this.created_at = created_at;
-
-	}
-
-	save() {
-		// let sql = `INSERT INTO jobs (project_id, status_id, price, created_at) VALUES ('${this.project_id}', '${this.status_id}', '${this.price}','${this.created_at}');`;
-
-		// return dbb.promise().query(sql);
-	}
-
-	updateStatus(id: number, status_id: number) {
-		let sql = `UPDATE jobs SET status_id = ${status_id} WHERE id = ${id}`;
-
-		return dbb.promise().query(sql);
 	}
 
 
@@ -56,6 +41,11 @@ class Jobs {
 		return dbb.promise().query(sql);
 	}
 
+	updateStatus(id: number, status_id: number) {
+		let sql = `UPDATE jobs SET status_id = ${status_id} WHERE id = ${id}`;
+
+		return dbb.promise().query(sql);
+	}
 
 }
 

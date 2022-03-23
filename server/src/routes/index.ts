@@ -92,6 +92,77 @@ router.get("/insert-jobs", function (req: any, res: any) {
 	});
 });
 
+// get all projects with their jobs
+router.get("/fetch-join-project-jobs", function (req: any, res: any) {
+
+	connection.query("SELECT * FROM project", function (err: {message: string;}, projects: any) {
+		if (err) throw err;
+		const patrol_list = projects.map((project: any) => {
+			return {
+				id: project.id,
+				title: project.title,
+				jobs: []
+			};
+		});
+		connection.query("SELECT * FROM jobs", function (err: {message: string;}, jobs: any) {
+			if (err) throw err;
+			patrol_list.forEach((patrol: any) => {
+				jobs.forEach((job: any) => {
+					if (patrol.id === job.project_id) {
+						patrol.jobs.push(job);
+					}
+				});
+			});
+			res.send(patrol_list);
+		});
+	});
+});
+
+// get specific project with its jobs
+router.get("/fetch-join-project-jobs/:id", function (req: any, res: any) {
+	const id = req.params.id;
+	connection.query("SELECT * FROM project WHERE id = ?", [id], function (err: {message: string;}, projects: any) {
+		if (err) throw err;
+		const patrol_list = projects.map((project: any) => {
+			return {
+				id: project.id,
+				title: project.title,
+				jobs: []
+			};
+		});
+		connection.query("SELECT * FROM jobs", function (err: {message: string;}, jobs: any) {
+			if (err) throw err;
+			patrol_list.forEach((patrol: any) => {
+				jobs.forEach((job: any) => {
+					if (patrol.id === job.project_id) {
+						patrol.jobs.push(job);
+					}
+				});
+			});
+			res.send(patrol_list);
+		});
+	});
+});
+
+// create a new project with its jobs
+router.post("/create-project-jobs", function (req: any, res: any) {
+	const project = req.body.project;
+	const jobs = req.body.jobs;
+	const sql = `INSERT INTO project (title) VALUES ('${project.title}')`;
+	connection.query(sql, function (err: any, result: any) {
+		if (err) throw err;
+		const project_id = result.insertId;
+		jobs.forEach((job: any) => {
+			const sql2 = `INSERT INTO jobs (project_id, status_id, price, created_at) VALUES (${project_id}, ${job.status_id}, ${job.price}, '${job.created_at}')`;
+			connection.query(sql2, function (err: any, result: any) {
+				if (err) throw err;
+				res.send(`project and jobs inserted into table`);
+			});
+		});
+	});
+});
+
+
 
 // get all jobs ordered by created_at ASC 
 router.get("/fetch-jobs-ordered-by-created_at", function (req: any, res: any) {
