@@ -22,17 +22,17 @@ class Projects {
 		// `INSERT INTO project (title) VALUES ('project 91')`;
 		let sql = `INSERT INTO project (title) VALUES ('${this.title}');`;
 
-		return db.execute(sql);
+		return db.promise().query(sql);
 	}
 	// create new project and add jobs to it
 	createNewProjec() {
 		let sql = `INSERT INTO project (title) VALUES ('${this.title}');`;
 
-		return db.execute(sql)
+		return db.promise().query(sql)
 			.then(() => {
 				let sql = `SELECT id FROM project WHERE title = '${this.title}';`;
 
-				return db.execute(sql);
+				return db.promise().query(sql);
 			})
 			.then(([project]: any) => {
 				let projectId = project[0].id;
@@ -45,21 +45,22 @@ class Projects {
 
 				sql = sql.slice(0, -2);
 
-				return db.execute(sql);
+				return db.promise().query(sql);
 			});
 	}
 
 
+	// JOIN jobs ON project.id = jobs.project_id
 	static findAll() {
-		let sql = `SELECT * FROM project JOIN jobs ON project.id = jobs.project_id`;
+		let sql = `SELECT * FROM project`;
 
-		return db.execute(sql);
+		return db.promise().query(sql);
 	}
 
 	static findById(id: number) {
 		let sql = `SELECT * FROM project WHERE id = ${id};`;
 
-		return db.execute(sql);
+		return db.promise().query(sql);
 	}
 }
 

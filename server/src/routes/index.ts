@@ -53,6 +53,16 @@ router.get("/insert-status", function (req: any, res: any) {
 	});
 });
 
+// drop jobs table if exists
+router.get("/drop-jobs", function (req: any, res: any) {
+	const sql = `DROP TABLE IF EXISTS jobs`;
+	connection.query(sql, function (err: any, result: any) {
+		if (err) throw err;
+		res.send("jobs table dropped");
+	});
+});
+
+
 
 router.get("/create-jobs", function (req: any, res: any) {
 	const sql3 = `
@@ -87,13 +97,13 @@ router.get("/fetch-join-project-jobs", function (req: any, res: any) {
 	const sql = `SELECT * FROM project JOIN jobs ON project.id = jobs.project_id`;
 	connection.query(sql, function (err: any, result: any, fields: any) {
 		if (err) throw err;
-		res.send(JSON.stringify(result));
+		res.send(result);
 	});
 });
 
 // get all jobs ordered by created_at ASC 
 router.get("/fetch-jobs-ordered-by-created_at", function (req: any, res: any) {
-	const sql = `SELECT * FROM jobs ORDER BY jobs.created_at ASC`;
+	const sql = `SELECT * FROM jobs ORDER BY jobs.created_at DESC`;
 	connection.query(sql, function (err: any, result: any, fields: any) {
 		if (err) throw err;
 		res.send(JSON.stringify(result));
