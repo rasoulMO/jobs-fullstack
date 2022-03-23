@@ -2,7 +2,7 @@ import {useQuery} from "react-query";
 
 const Jobs = () => {
 	const {data, isLoading, error} = useQuery("projects", () =>
-		fetch("http://localhost:3000/jobs/").then((res) => res.json())
+		fetch("http://localhost:8080/jobs/").then((res) => res.json())
 	);
 
 	if (isLoading) {

@@ -2,7 +2,7 @@ import {useQuery} from "react-query";
 
 const Projects = () => {
 	const {data, isLoading, error} = useQuery("projects", () =>
-		fetch("http://localhost:3000/projects/").then((res) => res.json())
+		fetch("http://localhost:8080/projects/").then((res) => res.json())
 	);
 
 	if (isLoading) {
@@ -12,12 +12,12 @@ const Projects = () => {
 		return <div>Error!</div>;
 	}
 
-	console.table(data.projects);
+	console.table(data);
 	return (
 		<div>
 			<h1>Projects</h1>
 
-			<pre>{JSON.stringify(data.projects, null, 2)}</pre>
+			<pre>{JSON.stringify(data, null, 2)}</pre>
 		</div>
 	);
 };
