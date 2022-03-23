@@ -22,38 +22,38 @@ class Jobs {
 	save() {
 		let sql = `INSERT INTO jobs (project_id, status_id, price, created_at) VALUES ('${this.project_id}', '${this.status_id}', '${this.price}','${this.created_at}');`;
 
-		return dbb.execute(sql);
+		return dbb.promise().query(sql);
 	}
 
 	updateStatus(id: number, status_id: number) {
 		let sql = `UPDATE jobs SET status_id = ${status_id} WHERE id = ${id}`;
 
-		return dbb.execute(sql);
+		return dbb.promise().query(sql);
 	}
 
 
 	static findAll() {
 		let sql = `SELECT * FROM jobs`;
 
-		return dbb.execute(sql);
+		return dbb.promise().query(sql);
 	}
 
 	static findById(id: number) {
 		let sql = `SELECT * FROM jobs WHERE id = ${id};`;
 
-		return dbb.execute(sql);
+		return dbb.promise().query(sql);
 	}
 
 	static findByStatusId(id: number) {
 		let sql = `SELECT * FROM jobs JOIN status ON jobs.status_id = status.id WHERE status.id = ${id};`;
 
-		return dbb.execute(sql);
+		return dbb.promise().query(sql);
 	}
 
 	static findAllOrderedByCreatedAt() {
 		let sql = `SELECT DATE(created_at) as date FROM jobs ORDER BY jobs.created_at DESC`;
 
-		return dbb.execute(sql);
+		return dbb.promise().query(sql);
 	}
 
 
