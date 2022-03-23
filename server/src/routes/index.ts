@@ -53,7 +53,6 @@ router.get("/insert-status", function (req: any, res: any) {
 	});
 });
 
-
 router.get("/create-jobs", function (req: any, res: any) {
 	const sql3 = `
 		CREATE TABLE IF NOT EXISTS jobs (
@@ -82,18 +81,29 @@ router.get("/insert-jobs", function (req: any, res: any) {
 	});
 });
 
-// get all projects with their jobs
-router.get("/fetch-join-project-jobs", function (req: any, res: any) {
-	const sql = `SELECT * FROM project JOIN jobs ON project.id = jobs.project_id`;
-	connection.query(sql, function (err: any, result: any, fields: any) {
-		if (err) throw err;
-		res.send(JSON.stringify(result));
-	});
-});
+
+// // create a new project with its jobs
+// router.post("/create-project-jobs", function (req: any, res: any) {
+// 	const project = req.body.project;
+// 	const jobs = req.body.jobs;
+// 	const sql = `INSERT INTO project (title) VALUES ('${project.title}')`;
+// 	connection.query(sql, function (err: any, result: any) {
+// 		if (err) throw err;
+// 		const project_id = result.insertId;
+// 		jobs.forEach((job: any) => {
+// 			const sql2 = `INSERT INTO jobs (project_id, status_id, price, created_at) VALUES (${project_id}, ${job.status_id}, ${job.price}, '${job.created_at}')`;
+// 			connection.query(sql2, function (err: any, result: any) {
+// 				if (err) throw err;
+// 				res.send(`project and jobs inserted into table`);
+// 			});
+// 		});
+// 	});
+// });
+
 
 // get all jobs ordered by created_at ASC 
 router.get("/fetch-jobs-ordered-by-created_at", function (req: any, res: any) {
-	const sql = `SELECT * FROM jobs ORDER BY jobs.created_at ASC`;
+	const sql = `SELECT * FROM jobs ORDER BY jobs.created_at DESC`;
 	connection.query(sql, function (err: any, result: any, fields: any) {
 		if (err) throw err;
 		res.send(JSON.stringify(result));
