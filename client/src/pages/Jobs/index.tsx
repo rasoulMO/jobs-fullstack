@@ -5,7 +5,9 @@ const Jobs = () => {
 	const {data, isLoading, error} = useQuery("projects", () =>
 		fetch("http://localhost:8080/jobs/").then((res) => res.json())
 	);
-	const [filteredList, setFilteredList] = useState(data.jobs);
+
+	const jobs = data?.jobs;
+	const [filteredList, setFilteredList] = useState(jobs);
 	const [selectedStatus, setSelectedStatus] = useState<any>();
 
 	const handleStatusChange = (e: any) => {
@@ -25,9 +27,10 @@ const Jobs = () => {
 	};
 
 	useEffect(() => {
-		let filteredData = filterByStatus(data.jobs);
+		let filteredData = filterByStatus(jobs);
 		setFilteredList(filteredData);
-	}, [selectedStatus]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [jobs, selectedStatus]);
 
 	if (isLoading) {
 		return <div>Loading...</div>;
