@@ -3,7 +3,7 @@ import {useQuery} from "react-query";
 import {getJobs} from "../../components/resources/jobs";
 
 const Jobs = () => {
-	const {data, isLoading, error} = useQuery("projects", getJobs);
+	const {data, isLoading, error} = useQuery("jobs", getJobs);
 
 	const jobs = data?.jobs;
 	const [filteredList, setFilteredList] = useState(jobs);
