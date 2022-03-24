@@ -1,10 +1,9 @@
 import {useEffect, useState} from "react";
 import {useQuery} from "react-query";
+import {getProjects} from "../../components/resources/projects";
 
 const Projects = () => {
-	const {data, isLoading, error} = useQuery("projects", () =>
-		fetch("http://localhost:8080/projects/").then((res) => res.json())
-	);
+	const {data, isLoading, error} = useQuery("projects", getProjects);
 
 	const projects = data?.projects;
 	const [title, setTitle] = useState("");

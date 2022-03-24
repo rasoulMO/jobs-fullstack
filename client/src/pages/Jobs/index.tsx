@@ -1,10 +1,9 @@
 import {useEffect, useState} from "react";
 import {useQuery} from "react-query";
+import {getJobs} from "../../components/resources/jobs";
 
 const Jobs = () => {
-	const {data, isLoading, error} = useQuery("projects", () =>
-		fetch("http://localhost:8080/jobs/").then((res) => res.json())
-	);
+	const {data, isLoading, error} = useQuery("projects", getJobs);
 
 	const jobs = data?.jobs;
 	const [filteredList, setFilteredList] = useState(jobs);
