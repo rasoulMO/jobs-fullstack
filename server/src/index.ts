@@ -1,7 +1,6 @@
-import {Response} from "express";
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+import express, {Response} from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const app = express();
 
@@ -12,17 +11,17 @@ app.use(cors());
 app.use(bodyParser.json());
 
 /* Routes */
-const indexRouter = require('./routes/index');
-const projectRouter = require('./routes/project');
-const jobRouter = require('./routes/job');
+import {homeRouter} from './routes/index.router';
+import {projectsRouter} from './routes/project.router';
+import {jobsRouter} from './routes/job.router';
 
-app.use('/', cors(), indexRouter);
-app.use('/projects', cors(), projectRouter);
-app.use('/jobs', cors(), jobRouter);
+app.use('/', cors(), homeRouter);
+app.use('/projects', cors(), projectsRouter);
+app.use('/jobs', cors(), jobsRouter);
 
 
 // Global Error Handler. IMPORTANT function params MUST start with err
-app.use((err: Error, res: Response) => {
+app.use((err: any, res: Response) => {
 
 	// Log error
 	if (err) {
@@ -31,7 +30,22 @@ app.use((err: Error, res: Response) => {
 		console.log("massage :", err.message);
 	}
 
-	// Send error message
+	// Send error message 400
+	res.status(400).send({
+		message: err.message,
+		name: err.name,
+		stack: err.stack
+	});
+
+	// Send error message 404
+	res.status(404).send({
+		message: err.message,
+		name: err.name,
+		stack: err.stack
+	});
+
+
+	// Send error message 500
 	res.status(500).json({
 		message: "Something went rely wrong",
 	});

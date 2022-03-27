@@ -1,7 +1,9 @@
-const db = require("../configs/db");
+
+import {RowDataPacket} from "mysql2";
+import {db} from "../configs/db.config";
 
 
-class Projects {
+export class Projects {
 	constructor() { }
 
 
@@ -22,7 +24,7 @@ class Projects {
 	addJob(id: number, status_id: number, price: number, created_at: string) {
 		const sql = `INSERT INTO jobs (project_id, status_id, price, created_at) VALUES (${id}, ${status_id}, ${price}, '${created_at}')`;
 
-		return db.promise().query(sql);
+		return db.promise().query<RowDataPacket[]>(sql);
 	}
 
 	static findAll() {
@@ -74,4 +76,3 @@ class Projects {
 	}
 }
 
-module.exports = Projects;

@@ -1,7 +1,6 @@
-import {MysqlError} from "mysql";
-import {Connection} from "mysql2";
 const env = process.env
-const mysql = require("mysql2");
+import {createPool} from "mysql2";
+import PoolConnection from "mysql2/typings/mysql/lib/PoolConnection";
 
 const db_config = {
 	host: env.MYSQL_HOST || "mysql_server",
@@ -10,9 +9,9 @@ const db_config = {
 	database: env.MYSQL_DATABASE || "test_db",
 }
 
-const mysqlConnection = mysql.createPool(db_config);
+const db = createPool(db_config);
 
-mysqlConnection.getConnection((err: MysqlError, connection: Connection) => {
+db.getConnection((err: NodeJS.ErrnoException, connection: PoolConnection) => {
 	if (err) {
 		if (err.code === "PROTOCOL_CONNECTION_LOST") {
 			console.error("Database connection was closed.");
@@ -30,4 +29,4 @@ mysqlConnection.getConnection((err: MysqlError, connection: Connection) => {
 });
 
 
-module.exports = mysqlConnection;
+export {db};
