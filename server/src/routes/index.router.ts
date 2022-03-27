@@ -1,10 +1,10 @@
-import express from "express";
+import express, {Request, Response} from "express";
 import {db} from "../configs/db.config";
 const homeRouter = express.Router();
 
 
 /* GET home page. */
-homeRouter.get("/", function (req: any, res: any) {
+homeRouter.get("/", function (req: Request, res: Response) {
 	res.send("hello world 👋");
 });
 
