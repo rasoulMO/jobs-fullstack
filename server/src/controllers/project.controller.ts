@@ -46,9 +46,9 @@ const createNewProject = async (req: any, res: any, next: any) => {
 	try {
 		let {title, jobs} = req.body;
 
-		// let project = new Project(title, jobs);
+		let project = new Projects();
 
-		let project = await Projects.create(title, jobs);
+		await project.create(title, jobs);
 
 		res.status(201).json({message: "Project created"});
 
