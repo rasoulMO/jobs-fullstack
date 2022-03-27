@@ -4,11 +4,14 @@ import {db} from "../configs/db.config";
 
 
 export class Projects {
+	static create(title: any, jobs: any) {
+		throw new Error("Method not implemented.");
+	}
 	constructor() { }
 
 
 	// create new project and add jobs to it 
-	static create(title: string, jobs: any) {
+	create(title: string, jobs: any) {
 		const sql = `INSERT INTO project (title) VALUES ('${title}')`;
 
 		return db.promise().query(sql, (err: any, result: any) => {
