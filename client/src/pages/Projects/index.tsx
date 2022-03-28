@@ -44,7 +44,7 @@ const Projects = () => {
 
 	console.table(foundProject);
 	return (
-		<div>
+		<div id='container'>
 			<h1>Projects</h1>
 			<input
 				type='search'
